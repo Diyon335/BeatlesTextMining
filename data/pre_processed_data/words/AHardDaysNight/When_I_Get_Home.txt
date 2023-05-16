@@ -1,5 +1,3 @@
-whoa:whoa
-whoa:whoa
 got:get
 whole:whole
 lot:lot
@@ -21,9 +19,7 @@ lot:lot
 things:thing
 gotta:gotta
 say:say
-whoa:whoa
-whoa:whoa
-got:get
+got:got
 whole:whole
 lot:lot
 things:thing
@@ -41,8 +37,6 @@ who's:who's
 waiting:wait
 home:home
 tonight:tonight
-whoa:whoa
-whoa:whoa
 got:get
 whole:whole
 lot:lot
@@ -79,8 +73,6 @@ gotta:gotta
 got:get
 business:business
 way:way
-whoa:whoa
-whoa:whoa
 got:get
 whole:whole
 lot:lot
@@ -88,7 +80,6 @@ things:thing
 tell:tell
 get:get
 home:home
-yeah:yeah
 got:get
 whole:whole
 lot:lot

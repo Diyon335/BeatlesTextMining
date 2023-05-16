@@ -9,10 +9,6 @@ nights:night
 alone:alone
 test:test
 tube:tube
-oh:oh
-oh:oh
-oh:oh
-oh:oh
 maxwell:maxwell
 edison:edison
 majoring:major
@@ -22,8 +18,6 @@ phone:phone
 take:take
 pictures:picture
 jo:jo
-oh:oh
-oh:oh
 oan:oan
 getting:get
 ready:ready
@@ -74,9 +68,6 @@ writing:write
 fifty:fifty
 times:time
 must:must
-oh:oh
-oh:oh
-oh:oh
 turns:turn
 back:back
 boy:boy
@@ -116,10 +107,6 @@ alone:alone
 painting:painting
 testimonial:testimonial
 pictures:picture
-oh:oh
-oh:oh
-oh:oh
-oh:oh
 rose:rise
 valerie:valerie
 screaming:screaming
@@ -135,9 +122,6 @@ free:free
 judge:judge
 agree:agree
 tells:tell
-oh:oh
-oh:oh
-oh:oh
 words:word
 leaving:leave
 lips:lip
@@ -162,10 +146,6 @@ hammer:hammer
 made:make
 sure:sure
 dead:dead
-whoa:whoa
-whoa:whoa
-whoa:whoa
-oh:oh
 doo:doo
 doo:doo
 silver:silver

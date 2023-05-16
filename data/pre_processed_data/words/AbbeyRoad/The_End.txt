@@ -1,5 +1,3 @@
-oh:oh
-yeah:yeah
 right:right
 gonna:gonna
 dreams:dream

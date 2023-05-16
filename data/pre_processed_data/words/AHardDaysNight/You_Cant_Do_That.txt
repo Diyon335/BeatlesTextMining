@@ -13,7 +13,6 @@ let:let
 leave:leave
 flat:flat
 told:tell
-oh:oh
 can't:can't
 well:well
 second:second
@@ -37,7 +36,6 @@ let:let
 leave:leave
 flat:flat
 told:tell
-oh:oh
 can't:can't
 everybody's:everybody's
 green:green
@@ -74,7 +72,6 @@ let:let
 leave:leave
 flat:flat
 told:tell
-oh:oh
 can't:can't
 can't:can't
 everybody's:everybody's
@@ -112,5 +109,4 @@ let:let
 leave:leave
 flat:flat
 told:tell
-oh:oh
 can't:can't

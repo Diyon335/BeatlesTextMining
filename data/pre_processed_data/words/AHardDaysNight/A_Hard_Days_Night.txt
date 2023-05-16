@@ -51,7 +51,6 @@ feeling:feeling
 holding:hold
 tight:tight
 tight:tight
-yeah:yeah
 hard:hard
 day's:day's
 night:night
@@ -92,7 +91,6 @@ feeling:feeling
 holding:hold
 tight:tight
 tight:tight
-yeah:yeah
 ooh:ooh
 hard:hard
 day's:day's

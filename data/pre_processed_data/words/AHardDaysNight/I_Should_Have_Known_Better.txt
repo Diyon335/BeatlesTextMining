@@ -8,8 +8,6 @@ everything:everything
 hey:hey
 hey:hey
 hey:hey
-whoa:whoa
-whoa:whoa
 never:never
 realised:realise
 kiss:kiss
@@ -22,11 +20,9 @@ can't:can't
 see:see
 tell:tell
 love:love
-oh:oh
 gonna:gonna
 say:say
 love:love
-oh:oh
 ask:ask
 mine:mine
 gonna:gonna
@@ -43,8 +39,6 @@ hey:hey
 hey:hey
 hey:hey
 give:give
-whoa:whoa
-whoa:whoa
 never:never
 realised:realise
 kiss:kiss
@@ -57,11 +51,9 @@ can't:can't
 see:see
 tell:tell
 love:love
-oh:oh
 gonna:gonna
 say:say
 love:love
-oh:oh
 ask:ask
 mine:mine
 gonna:gonna

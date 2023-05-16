@@ -20,12 +20,10 @@ start:start
 would:would
 love:love
 trust:trust
-oh:oh
 please:please
 run:run
 hide:hide
 love:love
-oh:oh
 please:please
 hurt:hurt
 pride:pride

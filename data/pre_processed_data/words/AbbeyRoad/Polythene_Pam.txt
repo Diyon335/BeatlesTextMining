@@ -17,10 +17,6 @@ aaah:aaah
 dressed:dress
 polythene:polythene
 bag:bag
-ah:ah
-ah:ah
-ah:ah
-ah:ah
 yes:yes
 see:see
 polythene:polythene
@@ -28,9 +24,6 @@ pam:pam
 aah:aah
 aah:aah
 aah:aah
-yeah:yeah
-yeah:yeah
-yeah:yeah
 hey:hey
 get:get
 dose:dose
@@ -49,10 +42,6 @@ aaah:aaah
 makes:make
 news:news
 world:world
-ah:ah
-ah:ah
-ah:ah
-ah:ah
 yes:yes
 could:could
 say:say
@@ -61,11 +50,6 @@ built:build
 aah:aah
 aah:aah
 aah:aah
-yeah:yeah
-yeah:yeah
-yeah:yeah
-yeah:yeah
-yeah:yeah
 great:great
 two:two
 three:three

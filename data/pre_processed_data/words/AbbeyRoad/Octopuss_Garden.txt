@@ -64,7 +64,6 @@ lies:lie
 beneath:beneath
 ocean:ocean
 waves:wave
-oh:oh
 joy:joy
 every:every
 girl:girl

@@ -1,17 +1,14 @@
-ah:ah
 world:world
 round:round
 turns:turn
 world:world
 round:round
-ah:ah
 wind:wind
 high:high
 blows:blow
 mind:mind
 wind:wind
 high:high
-ah:ah
 love:love
 old:old
 love:love

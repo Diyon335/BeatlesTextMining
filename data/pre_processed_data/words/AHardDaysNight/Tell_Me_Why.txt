@@ -10,7 +10,6 @@ everything:everything
 left:leave
 sitting:sit
 treat:treat
-oh:oh
 bad:bad
 hang:hang
 head:head

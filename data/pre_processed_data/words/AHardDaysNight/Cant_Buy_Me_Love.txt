@@ -1,13 +1,10 @@
 can't:can't
 buy:buy
 love:love
-oh:oh
 love:love
-oh:oh
 can't:can't
 buy:buy
 love:love
-oh:oh
 i'll:i'll
 buy:buy
 diamond:diamond
@@ -54,13 +51,11 @@ love:love
 can't:can't
 buy:buy
 love:love
-oh:oh
 everybody:everybody
 tells:tell
 can't:can't
 buy:buy
 love:love
-oh:oh
 say:say
 need:need
 diamond:diamond
@@ -89,7 +84,6 @@ tells:tell
 can't:can't
 buy:buy
 love:love
-oh:oh
 say:say
 need:need
 diamond:diamond
@@ -113,9 +107,6 @@ love:love
 can't:can't
 buy:buy
 love:love
-oh:oh
 love:love
-oh:oh
 buy:buy
 love:love
-oh:oh

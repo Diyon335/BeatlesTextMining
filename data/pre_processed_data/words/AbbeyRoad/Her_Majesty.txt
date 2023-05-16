@@ -29,8 +29,6 @@ i'm:i'm
 gonna:gonna
 make:make
 mine:mine
-oh:oh
-yeah:yeah
 someday:someday
 i'm:i'm
 gonna:gonna

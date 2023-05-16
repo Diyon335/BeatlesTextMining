@@ -1,4 +1,3 @@
-oh:oh
 darling:darling
 please:please
 believe:believe
@@ -10,7 +9,6 @@ tell:tell
 i'll:i'll
 never:never
 harm:harm
-oh:oh
 darling:darling
 leave:leave
 i'll:i'll
@@ -36,8 +34,7 @@ well:well
 know:know
 nearly:nearly
 broke:broke
-died:died
-oh:oh
+died:die
 darling:darling
 leave:leave
 i'll:i'll
@@ -65,15 +62,13 @@ well:well
 know:know
 nearly:nearly
 broke:broke
-died:died
-oh:oh
+died:die
 darling:darling
 please:please
 believe:believe
 i'll:i'll
 never:never
 let:let
-oh:oh
 believe:believe
 darling:darling
 believe:believe
