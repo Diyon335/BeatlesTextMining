@@ -1,11 +1,14 @@
-import pre_process, plot_freq_dist
 import nltk
+import plot_freq_dist
+import pre_process
+import coref
 
 """
 You can change what you want to run over here
 """
 run_pre_processing = False
-freq_dist = True
+freq_dist = False
+run_coref = True
 
 
 def main():
@@ -25,6 +28,9 @@ def main():
 
     if freq_dist:
         plot_freq_dist.plot()
+
+    if run_coref:
+        coref.run_coref()
 
 
 if __name__ == '__main__':
