@@ -1,43 +1,26 @@
-import stanza
+from allennlp.predictors import Predictor
 
 
 def run_coref():
 
-    # Download the English models if not already downloaded
-    stanza.download('en')
+    # Load the coreference resolution model
+    predictor = Predictor.from_path(
+        "https://storage.googleapis.com/allennlp-public-models/coref-spanbert-large-2021.03.10.tar.gz"
+    )
 
-    # Initialize the pipeline
-    nlp = stanza.Pipeline('en')
+    # Input text
+    text = "John went to the market. He bought some apples. John loves to eat them."
 
-    # Define the sentence
-    sentence = "Diyon is a boy. He is awesome."
+    # Perform coreference resolution
+    resolved_output = predictor.predict(document=text)
 
-    # Process the sentence
-    doc = nlp(sentence)
+    # Access the coreference clusters
+    clusters = resolved_output["clusters"]
+    print("Coreference clusters:", clusters)
 
-    print(doc.sentences)
+    # Access the coreference resolved text
+    resolved_text = resolved_output["document"]
+    print("Resolved text:", resolved_text)
 
-    for sent in doc.sentences:
-
-        for word in sent.words:
-
-            if word.upos == "PRON":
-
-                antecedent = word.deprel
-                print(word, antecedent)
-
-    # # Iterate over the sentences
-    # for sent in doc.sentences:
-    #     # Iterate over the words in the sentence
-    #     for word in sent.words:
-    #         print(sent)
-    #         # Check if the word is a pronoun
-    #         if word.upos == 'PRON':
-    #             # Find the antecedent by traversing the dependency tree
-    #             antecedent = word.head
-    #             while antecedent.deprel != 'root':
-    #                 antecedent = sent.words[antecedent.head - 1]
-    #             # Print the resolved pronoun with its antecedent
-    #             print(f"Pronoun: {word.text}\tAntecedent: {antecedent.text}")
 
 
