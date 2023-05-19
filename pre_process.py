@@ -10,7 +10,6 @@ output_folder = "data/pre_processed_data/"
 
 extra_stop_words = ["oh", "ah", "yeah", "heh", "whoa"]
 
-
 def get_wordnet_pos(treebank_tag):
     """
     This function identifies if a word is a noun, adjective, verb or adverb

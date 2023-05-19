@@ -1,12 +1,12 @@
-import pre_process, plot_freq_dist
+import pre_process, plot_freq_dist, BERT_model, voting_scheme
 import nltk
 
 """
 You can change what you want to run over here
 """
 run_pre_processing = False
-freq_dist = True
-
+freq_dist = False
+bert = True
 
 def main():
 
@@ -26,6 +26,10 @@ def main():
     if freq_dist:
         plot_freq_dist.plot()
 
+    if bert:
+        dict = BERT_model.dict_creation()
+        dict = BERT_model.sentences_emotion_classification(dict)
+        voting_scheme.vote(dict)
 
 if __name__ == '__main__':
     main()
