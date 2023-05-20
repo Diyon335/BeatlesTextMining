@@ -1,4 +1,5 @@
 import os
+import shutil
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer, sent_tokenize
 from nltk import pos_tag
@@ -37,7 +38,7 @@ def run_word_tokenize():
     """
 
     if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
+        os.makedirs(output_folder)
 
     # Tokenizer type
     tokenizer = RegexpTokenizer(r"\b\w+['']\w+\b|\w+")
@@ -49,7 +50,6 @@ def run_word_tokenize():
     for word in extra_stop_words:
         nltk_stop_words.add(word)
 
-    i = 0
     # For each album
     for folder in os.listdir(data_folder):
 
@@ -60,6 +60,7 @@ def run_word_tokenize():
             # Also applies lemmatisation
             with open(data_folder+folder+"/"+text_file) as f:
 
+                beatle_folder = "_".join(f.readline().split(":")).replace("\n", "")
                 lyrics = f.read()
 
                 tokens = tokenizer.tokenize(lyrics)
@@ -81,26 +82,33 @@ def run_word_tokenize():
 
                     lemmatised_words.append(lemmatised_word)
 
-                if not os.path.exists(output_folder+"words/"+folder):
-                    os.mkdir(output_folder+"words/"+folder)
+                # Saves into general folders and beatle-specific folders
+                if not os.path.exists(output_folder+"words/all/"+folder):
+                    os.makedirs(output_folder+"words/all/"+folder)
 
-                if not os.path.exists(output_folder+"sentences/"+folder):
-                    os.mkdir(output_folder+"sentences/"+folder)
+                if not os.path.exists(output_folder+"sentences/all/"+folder):
+                    os.makedirs(output_folder+"sentences/all/"+folder)
 
-                with open(output_folder+"sentences/"+folder+"/"+text_file, "w") as output_file:
+                if not os.path.exists(output_folder+f"words/{beatle_folder}/{folder}"):
+                    os.makedirs(output_folder+f"words/{beatle_folder}/{folder}")
+
+                if not os.path.exists(output_folder+f"sentences/{beatle_folder}/{folder}"):
+                    os.makedirs(output_folder+f"sentences/{beatle_folder}/{folder}")
+
+                with open(output_folder+"sentences/all/"+folder+"/"+text_file, "w") as output_file:
 
                     for sentence in sentences:
 
                         output_file.write(f"{sentence}\n")
 
-                with open(output_folder+"words/"+folder+"/"+text_file, "w") as output_file:
+                shutil.copyfile(output_folder+"sentences/all/"+folder+"/"+text_file,
+                                output_folder+f"sentences/{beatle_folder}/{folder}/{text_file}")
+
+                with open(output_folder+"words/all/"+folder+"/"+text_file, "w") as output_file:
 
                     for word, lword in zip(words, lemmatised_words):
 
                         output_file.write(f"{word[0]}:{lword}\n")
 
-        # TODO REMOVE WHEN WE WANT TO DO ALL DATA
-        if i == 1:
-            break
-
-        i += 1
+                shutil.copyfile(output_folder + "words/all/" + folder + "/" + text_file,
+                                output_folder + f"words/{beatle_folder}/{folder}/{text_file}")
