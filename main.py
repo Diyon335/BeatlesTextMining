@@ -1,11 +1,16 @@
-import pre_process, plot_freq_dist
 import nltk
+import plot_freq_dist
+import pre_process
+import coref
+import electra
 
 """
 You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = True
+run_coref = False
+run_electra = False
 
 
 def main():
@@ -25,6 +30,12 @@ def main():
 
     if freq_dist:
         plot_freq_dist.plot()
+
+    if run_coref:
+        coref.run_coref()
+
+    if run_electra:
+        electra.run_classifier()
 
 
 if __name__ == '__main__':
