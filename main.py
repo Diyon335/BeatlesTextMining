@@ -8,9 +8,9 @@ import electra
 You can change what you want to run over here
 """
 run_pre_processing = False
-freq_dist = False
+freq_dist = True
 run_coref = False
-run_electra = True
+run_electra = False
 
 
 def main():
