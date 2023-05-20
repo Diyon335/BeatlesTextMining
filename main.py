@@ -38,10 +38,10 @@ def main():
         plot_freq_dist.plot()
 
     if t5:
-        dict = t5_model.dict_creation()
-        dict = t5_model.sentences_emotion_classification(dict)
-        voting_scheme.vote(dict)
-        knowledge_graph.produce_graph(dict)
+        sentences_dict, labels_dict2 = t5_model.dict_creation()
+        #dict = t5_model.sentences_emotion_classification(dict)
+        #voting_scheme.vote(dict)
+        #knowledge_graph.produce_graph(dict)
 
     if roberta:
         RoBERTa.prova()
