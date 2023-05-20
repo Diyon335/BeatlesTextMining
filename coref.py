@@ -1,6 +1,3 @@
-from allennlp.predictors import Predictor
-
-
 def run_coref():
 
     # Load the coreference resolution model

@@ -2,7 +2,7 @@ import os
 from transformers import AutoTokenizer, AutoModelWithLMHead, BertForSequenceClassification, BertTokenizerFast, Trainer, TrainingArguments
 import torch
 import numpy as np
-path = "data/pre_processed_data/sentences"
+path = "data/pre_processed_data/sentences/all"
 
 model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-emotion")
 tokenizer = AutoTokenizer.from_pretrained("mrm8488/t5-base-finetuned-emotion")

@@ -1,4 +1,6 @@
-import BERT_model
+import t5_model
+import knowledge_graph
+import RoBERTa
 import voting_scheme
 import nltk
 import plot_freq_dist
@@ -11,8 +13,8 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-bert = True
-freq_dist = True
+t5 = True
+roberta = False
 run_coref = False
 run_electra = False
 
@@ -35,11 +37,15 @@ def main():
     if freq_dist:
         plot_freq_dist.plot()
 
-    if bert:
-        dict = BERT_model.dict_creation()
-        dict = BERT_model.sentences_emotion_classification(dict)
+    if t5:
+        dict = t5_model.dict_creation()
+        dict = t5_model.sentences_emotion_classification(dict)
         voting_scheme.vote(dict)
-        
+        knowledge_graph.produce_graph(dict)
+
+    if roberta:
+        RoBERTa.prova()
+
     if run_coref:
         coref.run_coref()
 
