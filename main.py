@@ -5,16 +5,17 @@ import plot_freq_dist
 import pre_process
 import coref
 import electra
+import entity_extraction
 
 """
 You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-bert = True
-freq_dist = True
+bert = False
 run_coref = False
 run_electra = False
+run_ee = True
 
 
 def main():
@@ -45,6 +46,9 @@ def main():
 
     if run_electra:
         electra.run_classifier()
+
+    if run_ee:
+        entity_extraction.run_entity_extraction()
 
 
 if __name__ == '__main__':
