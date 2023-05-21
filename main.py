@@ -1,6 +1,6 @@
 import t5_model
 import knowledge_graph
-import RoBERTa
+import BERT
 import voting_scheme
 import nltk
 import plot_freq_dist
@@ -39,6 +39,7 @@ def main():
 
     if t5:
         sentences_dict, labels_dict2 = t5_model.dict_creation()
+        BERT.pos_tagging(sentences_dict)
         #dict = t5_model.sentences_emotion_classification(dict)
         #voting_scheme.vote(dict)
         #knowledge_graph.produce_graph(dict)
