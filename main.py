@@ -14,7 +14,7 @@ You can change what you want to run over here
 run_pre_processing = False
 freq_dist = False
 t5 = True
-roberta = False
+bert = False
 run_coref = False
 run_electra = False
 
@@ -38,14 +38,19 @@ def main():
         plot_freq_dist.plot()
 
     if t5:
-        sentences_dict, labels_dict2 = t5_model.dict_creation()
-        BERT.pos_tagging(sentences_dict)
-        #dict = t5_model.sentences_emotion_classification(dict)
+        sentences_dict, labels_dict = t5_model.dict_creation()
+        print(sentences_dict)
+        #dict = BERT.emotion_classification(sentences_dict)
+        entities_list = BERT.pos_tagging(sentences_dict)
+        print(entities_list)
+        names_dict = BERT.extract_most_common_names(entities_list)
+        print(names_dict)
+        #dict = t5_model.sentences_emotion_classification(sentences_dict)
         #voting_scheme.vote(dict)
         #knowledge_graph.produce_graph(dict)
 
-    if roberta:
-        RoBERTa.prova()
+    if bert:
+        BERT.emotion_classification()
 
     if run_coref:
         coref.run_coref()

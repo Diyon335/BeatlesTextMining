@@ -1,34 +1,44 @@
-from transformers import BertTokenizer, BertModel,AutoTokenizer, AutoModelForTokenClassification, TokenClassificationPipeline
+from transformers import BertTokenizer, BertModel,AutoTokenizer, AutoModelForTokenClassification, TokenClassificationPipeline, pipeline
 import random
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
 SEED = 1234
-
-model_name = "QCRI/bert-base-multilingual-cased-pos-english"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForTokenClassification.from_pretrained(model_name)
-
-pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
-outputs = pipeline("A test example")
-print(outputs)
-
-
-
 random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
-max_length = 120
 
-#config = AutoConfig.from_pretrained(bert-base-uncased)
-#config.num_labels = 2
+def emotion_classification(dict):
+    classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
+    for key in dict:
+        if key == "Anna_(Go_To_Him)" or key == "Let_It_Be":
+            sentence_labels = []
+            for item in dict[key]:
+                prediction = classifier(item, )
+                max = 0
+                for element in prediction:
+                    for em in element:
+                        if (em['score'] > max):
+                            max = em['score']
+                            emotion = em['label']
+                sentence_labels.append(emotion)
+                dict[key] = sentence_labels
 
-model = BertModel.from_pretrained('bert-base-uncased')
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    for song in dict:
+        sentiment_dict = {}
+        sent_list = dict[song]
 
-def emotion_classificatio(dict):
-    '''To implement'''
+        for sent in sent_list:
+
+            if sent not in sentiment_dict:
+                sentiment_dict[sent] = 0
+
+            sentiment_dict[sent] += 1
+
+        dict[song] = sentiment_dict
+    return dict
+
 
 def embeddings(dict):
     tokens = tokenizer.tokenize(dict["Anna_(Go_To_Him)"][0])
@@ -43,18 +53,33 @@ def embeddings(dict):
     print(attention_mask)
 
 def pos_tagging(dict):
-    list1 = []
+    temp = []
     final_list = []
-    list2 = []
     model_name = "QCRI/bert-base-multilingual-cased-pos-english"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForTokenClassification.from_pretrained(model_name)
 
     pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
-    outputs = pipeline(dict["Anna_(Go_To_Him)"][0])
-    for element in outputs:
-        list1.append(element["entity"])
-        list1.append(element["word"])
-    final_list = [list1[n:n + 2] for n in range(0, len(list1), 2)]
-    final_list
-    print(final_list)
+    for key in dict:
+        if key == "Anna_(Go_To_Him)" or key == "Let_It_Be":
+            for item in dict[key]:
+                outputs = pipeline(item)
+                for element in outputs:
+                    temp.append(element["entity"])
+                    temp.append(element["word"])
+    final_list = [temp[n:n + 2] for n in range(0, len(temp), 2)]
+    return(final_list)
+
+
+def extract_most_common_names(entities_list):
+    final_list = []
+    final_dict = {}
+    for element in entities_list:
+        if element[0] == "NNP":
+            print(element[1])
+            print(final_list)
+            if element[1] not in final_list:
+                final_dict[element[1]] = 0
+                final_list.append(element[1])
+            final_dict[element[1]] += 1
+    return final_dict

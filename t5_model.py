@@ -15,10 +15,12 @@ labels = []
 def dict_creation():
     for folder in os.listdir(path):
         for file in os.listdir(path + "/" + folder):
-            if file == "Anna_(Go_To_Him).txt":
+            if file == "Anna_(Go_To_Him).txt" or file == "Let_It_Be.txt":
                 with open(path + "/" + folder + "/" + file) as f:
                     lyrics = f.readlines()
                     lyrics = [lyric.replace("\n", "") for lyric in lyrics]
+                    sentences = []
+                    labels = []
                     for line in lyrics:
                         sentence = line.split("%")[0]
                         label = line.split("%")[1]
@@ -31,7 +33,7 @@ def dict_creation():
 
 def sentences_emotion_classification(dict):
     for key in dict:
-        if key == "Because" or key == "Carry_That_Weight":
+        if key == "Anna_(Go_To_Him)":
             sentence_labels = []
             for item in dict[key]:
                 input_ids = tokenizer.encode(item + '</s>', return_tensors='pt')
@@ -43,5 +45,19 @@ def sentences_emotion_classification(dict):
                 label = label.replace('<pad> ', '')
                 sentence_labels.append(label)
                 dict[key] = sentence_labels
+
+    for song in dict:
+        sentiment_dict = {}
+        sent_list = dict[song]
+
+        for sent in sent_list:
+
+            if sent not in sentiment_dict:
+                sentiment_dict[sent] = 0
+
+            sentiment_dict[sent] += 1
+
+        dict[song] = sentiment_dict
+
 
     return(dict)
