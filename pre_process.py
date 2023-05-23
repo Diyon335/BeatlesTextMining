@@ -112,3 +112,28 @@ def run_word_tokenize():
 
                 shutil.copyfile(output_folder + "words/all/" + folder + "/" + text_file,
                                 output_folder + f"words/{beatle_folder}/{folder}/{text_file}")
+
+
+def dict_creation():
+    path = "data/pre_processed_data/sentences/all"
+    song_dict = {}
+    labels_dict = {}
+    sentences = []
+    labels = []
+    for folder in os.listdir(path):
+        for file in os.listdir(path + "/" + folder):
+            if file == "Anna_(Go_To_Him).txt" or file == "Let_It_Be.txt" or file == "A_Taste_Of_Honey.txt":
+                with open(path + "/" + folder + "/" + file) as f:
+                    lyrics = f.readlines()
+                    lyrics = [lyric.replace("\n", "") for lyric in lyrics]
+                    sentences = []
+                    labels = []
+                    for line in lyrics:
+                        sentence = line.split("%")[0]
+                        label = line.split("%")[1]
+                        sentences.append(sentence)
+                        labels.append(label)
+                    song_dict[file.replace(".txt", "")] = sentences
+                    labels_dict[file.replace(".txt", "")] = labels
+
+    return song_dict, labels_dict

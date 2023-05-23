@@ -38,13 +38,15 @@ def main():
         plot_freq_dist.plot()
 
     if t5:
-        sentences_dict, labels_dict = t5_model.dict_creation()
+
+        sentences_dict, labels_dict = pre_process.dict_creation()
         print(sentences_dict)
+        dict = coref.coreference(sentences_dict)
+        print(dict)
         #dict = BERT.emotion_classification(sentences_dict)
-        entities_list = BERT.pos_tagging(sentences_dict)
-        print(entities_list)
-        names_dict = BERT.extract_most_common_names(entities_list)
-        print(names_dict)
+        #print(dict)
+        #entities_list = BERT.pos_tagging(sentences_dict)
+        #names_dict = BERT.extract_most_common_names(entities_list)
         #dict = t5_model.sentences_emotion_classification(sentences_dict)
         #voting_scheme.vote(dict)
         #knowledge_graph.produce_graph(dict)
