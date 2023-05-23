@@ -122,7 +122,7 @@ def dict_creation():
     labels = []
     for folder in os.listdir(path):
         for file in os.listdir(path + "/" + folder):
-            if file == "Anna_(Go_To_Him).txt" or file == "Let_It_Be.txt" or file == "A_Taste_Of_Honey.txt":
+            if file == "Anna_(Go_To_Him).txt":
                 with open(path + "/" + folder + "/" + file) as f:
                     lyrics = f.readlines()
                     lyrics = [lyric.replace("\n", "") for lyric in lyrics]

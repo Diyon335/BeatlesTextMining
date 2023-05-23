@@ -38,11 +38,9 @@ def main():
         plot_freq_dist.plot()
 
     if t5:
-
         sentences_dict, labels_dict = pre_process.dict_creation()
-        print(sentences_dict)
-        dict = coref.coreference(sentences_dict)
-        print(dict)
+        #sentences_dict = coref.coreference(sentences_dict)
+        BERT.fine_tune(sentences_dict, labels_dict)
         #dict = BERT.emotion_classification(sentences_dict)
         #print(dict)
         #entities_list = BERT.pos_tagging(sentences_dict)

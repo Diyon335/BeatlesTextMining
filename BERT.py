@@ -3,14 +3,16 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
+from datasets import Dataset
 SEED = 1234
 random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
 
+classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
+
 def emotion_classification(dict):
-    classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
     for key in dict:
         if key == "Anna_(Go_To_Him)" or key == "Let_It_Be":
             sentence_labels = []
@@ -83,3 +85,12 @@ def extract_most_common_names(entities_list):
                 final_list.append(element[1])
             final_dict[element[1]] += 1
     return final_dict
+
+def fine_tune(sentence_dict, label_dict):
+    dataset = {}
+    print(sentence_dict)
+    print(label_dict)
+
+    dataset = Dataset.from_dict(sentence_dict)
+    print(dataset)
+    #tokenized_datasets = sentence_dict.map(tokenize_function, batched=True)
