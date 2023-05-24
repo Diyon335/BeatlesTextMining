@@ -13,9 +13,9 @@ You can change what you want to run over here
 run_pre_processing = False
 freq_dist = False
 bert = False
-run_coref = False
+run_coref = True
 run_electra = False
-run_ee = True
+run_ee = False
 
 
 def main():
@@ -28,7 +28,9 @@ def main():
                    "movie_reviews",
                    "averaged_perceptron_tagger",
                    "vader_lexicon",
-                   "punkt"])
+                   "punkt",
+                   'maxent_ne_chunker',
+                   "words"])
 
     if run_pre_processing:
         pre_process.run_word_tokenize()
@@ -45,7 +47,8 @@ def main():
         coref.run_coref()
 
     if run_electra:
-        electra.run_classifier()
+        #electra.run_classifier()
+        electra.fine_tune()
 
     if run_ee:
         entity_extraction.run_entity_extraction()

@@ -1,14 +1,22 @@
 from transformers import pipeline
 import os
+from datasets import Dataset
 from nltk.tokenize import sent_tokenize
 import matplotlib.pyplot as plt
 import networkx as nx
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
+import random
+import numpy as np
+import evaluate
+import wandb
 
 
 data_folder = "data/pre_processed_data/sentences/all/"
+labelled_data = "data/labelled_data/"
 model_emotions = ['joy', 'love', 'anger', 'fear', 'surprise', 'sadness']
 output_folder = "data/sentiment_cluster_diagrams/"
 
+metric = evaluate.load("accuracy")
 
 def run_classifier():
 
@@ -52,6 +60,71 @@ def run_classifier():
 
     plot_custer_diagram("All songs", total_dict, output_folder + "all.png")
 
+
+def fine_tune():
+
+    # Create dataset
+    dataset = {"train": [], "test": [], "validation": []}
+
+    for data_type in os.listdir(labelled_data):
+
+        for song in os.listdir(labelled_data + data_type):
+
+            with open(labelled_data + data_type + "/" + song) as f:
+
+                sentences = f.readlines()[1:]
+
+                for sentence in sentences:
+
+                    label_dict = {}
+
+                    split_sentence = sentence.split("%")
+
+                    text = split_sentence[0].replace("\n", "")
+                    label = split_sentence[1].replace("\n", "")
+
+                    label_dict["label"] = label
+                    label_dict["text"] = text
+
+                    dataset[data_type].append(label_dict)
+
+    tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+
+    tokenized_datasets = {"train": [], "test": [], "validation": []}
+
+    for data_type in dataset:
+        for example in dataset[data_type]:
+
+            tokenized_example = tokenizer(example["text"], padding="max_length", truncation=True)
+            tokenized_datasets[data_type].append(tokenized_example)
+
+    random.shuffle(tokenized_datasets["train"])
+    random.shuffle(tokenized_datasets["test"])
+    random.shuffle(tokenized_datasets["validation"])
+
+    model = AutoModelForSequenceClassification.from_pretrained('bhadresh-savani/electra-base-emotion', num_labels=6)
+    training_args = TrainingArguments(output_dir="data/electra_fine_tuned/",
+                                      evaluation_strategy="epoch")
+
+    wandb.login(key="f98f0b7ea0fe9cdabbe5e59c532b2260512d004b")
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets["test"],
+        compute_metrics=compute_metrics,
+    )
+
+    trainer.train()
+
+
+def compute_metrics(eval_pred):
+
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+
+    return metric.compute(predictions=predictions, references=labels)
 
 def plot_custer_diagram(title, song_dict, output_path):
 
