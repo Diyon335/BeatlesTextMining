@@ -16,8 +16,8 @@ run_pre_processing = False
 freq_dist = False
 t5 = False
 bert = False
-run_coref = False
-run_electra = True
+run_coref = True
+run_electra = False
 run_ee = False
 
 

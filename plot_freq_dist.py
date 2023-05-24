@@ -91,8 +91,6 @@ def plot():
                       20)
 
 
-
-
 def get_album_name(title):
 
     strings = re.findall('[A-Z][^A-Z]*', title)
