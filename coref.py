@@ -1,26 +1,20 @@
-from allennlp.predictors import Predictor
+from fastcoref import FCoref
 
 
 def run_coref():
+    model = FCoref()
 
-    # Load the coreference resolution model
-    predictor = Predictor.from_path(
-        "https://storage.googleapis.com/allennlp-public-models/coref-spanbert-large-2021.03.10.tar.gz"
+    preds = model.predict(
+        texts=['We are so happy to see you using our coref package. This package is very fast!']
     )
 
-    # Input text
-    text = "John went to the market. He bought some apples. John loves to eat them."
+    print(preds[0].get_clusters(as_strings=False))
 
-    # Perform coreference resolution
-    resolved_output = predictor.predict(document=text)
+    print(preds[0].get_clusters())
 
-    # Access the coreference clusters
-    clusters = resolved_output["clusters"]
-    print("Coreference clusters:", clusters)
-
-    # Access the coreference resolved text
-    resolved_text = resolved_output["document"]
-    print("Resolved text:", resolved_text)
+    print(preds[0].get_logit(
+        span_i=(33, 50), span_j=(52, 64)
+    ))
 
 
 
