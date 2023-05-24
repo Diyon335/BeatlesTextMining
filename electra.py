@@ -1,4 +1,4 @@
-from transformers import pipeline
+from transformers import pipeline, DataCollatorWithPadding
 import os
 from datasets import Dataset
 from nltk.tokenize import sent_tokenize
@@ -17,6 +17,7 @@ model_emotions = ['joy', 'love', 'anger', 'fear', 'surprise', 'sadness']
 output_folder = "data/sentiment_cluster_diagrams/"
 
 metric = evaluate.load("accuracy")
+
 
 def run_classifier():
 
@@ -75,7 +76,6 @@ def fine_tune():
                 sentences = f.readlines()[1:]
 
                 for sentence in sentences:
-
                     label_dict = {}
 
                     split_sentence = sentence.split("%")
@@ -88,14 +88,25 @@ def fine_tune():
 
                     dataset[data_type].append(label_dict)
 
-    tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+    tokenizer = AutoTokenizer.from_pretrained('bhadresh-savani/electra-base-emotion')
 
     tokenized_datasets = {"train": [], "test": [], "validation": []}
 
+    label_map = {
+        "joy": 0,
+        "love": 1,
+        "fear": 2,
+        "sadness": 3,
+        "anger": 4,
+        "surprise": 5
+    }
+
     for data_type in dataset:
+
         for example in dataset[data_type]:
 
             tokenized_example = tokenizer(example["text"], padding="max_length", truncation=True)
+            tokenized_example["label"] = label_map[example["label"]]
             tokenized_datasets[data_type].append(tokenized_example)
 
     random.shuffle(tokenized_datasets["train"])
@@ -103,16 +114,31 @@ def fine_tune():
     random.shuffle(tokenized_datasets["validation"])
 
     model = AutoModelForSequenceClassification.from_pretrained('bhadresh-savani/electra-base-emotion', num_labels=6)
-    training_args = TrainingArguments(output_dir="data/electra_fine_tuned/",
-                                      evaluation_strategy="epoch")
+
+    training_args = TrainingArguments(
+        output_dir="data/electra_fine_tuned/",
+        evaluation_strategy="epoch",
+        per_device_train_batch_size=8,
+        per_device_eval_batch_size=8,
+        num_train_epochs=8,
+        learning_rate=2e-5,
+        weight_decay=0.01,
+        load_best_model_at_end=True,
+        metric_for_best_model="accuracy",
+        logging_steps=500,
+        save_strategy="epoch"
+    )
 
     wandb.login(key="f98f0b7ea0fe9cdabbe5e59c532b2260512d004b")
+
+    data_collator = DataCollatorWithPadding(tokenizer)
 
     trainer = Trainer(
         model=model,
         args=training_args,
         train_dataset=tokenized_datasets["train"],
-        eval_dataset=tokenized_datasets["test"],
+        eval_dataset=tokenized_datasets["validation"],
+        data_collator=data_collator,
         compute_metrics=compute_metrics,
     )
 
@@ -125,6 +151,7 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(logits, axis=-1)
 
     return metric.compute(predictions=predictions, references=labels)
+
 
 def plot_custer_diagram(title, song_dict, output_path):
 
