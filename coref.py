@@ -2,6 +2,7 @@ from fastcoref import FCoref
 import nltk
 from nltk.tag import pos_tag
 import os
+import re
 
 
 data_folder = [
@@ -42,6 +43,10 @@ def run_coref():
             for cluster in clusters:
                 tags.append(pos_tag(cluster))
 
+            print(text)
+            print(preds.clusters)
+            print(clusters)
+
             new_text = replace_pronouns_with_proper_nouns(text, clusters, tags)
 
             if not os.path.exists(output_dir):
@@ -57,6 +62,8 @@ def replace_pronouns_with_proper_nouns(text, clusters, pos_tags):
 
     # Iterate through the clusters and POS tags
     for cluster, pos_tag_list in zip(clusters, pos_tags):
+        # print(f"cluster: {cluster}")
+        # print(f"pos tag list: {pos_tag_list}")
         proper_noun = None
         pronouns = []
 
@@ -66,18 +73,23 @@ def replace_pronouns_with_proper_nouns(text, clusters, pos_tags):
             for token, pos in pos_tag_list:
                 if token == word:
                     # Check if the word is a proper noun
-                    if pos == 'NN':
+                    if pos == 'NNP' or pos == 'NN':
                         proper_noun = word
                     # Check if the word is a pronoun
-                    elif pos == 'PRP':
+                    elif pos == 'PRP' or pos == 'PRP$':
                         pronouns.append(word)
                     break
+        # print(f"Proper noun: {proper_noun}")
+        # print(f"pronouns: {pronouns}")
 
         # Replace pronouns with the proper noun in the original text
         if proper_noun is not None:
             for pronoun in pronouns:
-                text = text.replace(pronoun, proper_noun)
+                # Use regular expression with word boundaries to match whole words
+                pattern = r'\b' + re.escape(pronoun) + r'\b'
+                text = re.sub(pattern, proper_noun, text)
 
     return text
+
 
 
