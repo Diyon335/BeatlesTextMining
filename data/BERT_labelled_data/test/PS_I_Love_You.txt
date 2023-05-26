@@ -1,0 +1,19 @@
+John:Paul:George
+As I write this letter, send my love to you.%joy
+Remember that I'll always be in love with you.%joy
+Treasure these few words 'til we're together.%joy
+Keep all my love forever.%joy
+P.S. I love you, you, you.%joy
+I'll be coming home again to you, love, and 'til the day I do, love.%joy
+P.S. I love you, you, you.%joy
+As I write this letter, send my love to you.%joy
+Remember that I'll always be in love with you.%joy
+Treasure these few words 'til we're together.%joy
+Keep all my love forever.%joy
+P.S. I love you, you, you.%joy
+As I write this letter, send my love to you (you know I want you to).%joy
+Remember that I'll always be in love with you.%joy
+I'll be coming home again to you, love, and 'til the day I do, love.%joy
+P.S. I love you, you, you.%joy
+You, you, you.%joy
+I love you.%joy

@@ -11,6 +11,7 @@ output_folder = "data/pre_processed_data/"
 
 extra_stop_words = ["oh", "ah", "yeah", "heh", "whoa"]
 
+
 def get_wordnet_pos(treebank_tag):
     """
     This function identifies if a word is a noun, adjective, verb or adverb
@@ -54,11 +55,11 @@ def run_word_tokenize():
     for folder in os.listdir(data_folder):
 
         # For each song
-        for text_file in os.listdir(data_folder+folder):
+        for text_file in os.listdir(data_folder + folder):
 
             # Read lyrics, tokenize words and sentences after removing stop words
             # Also applies lemmatisation
-            with open(data_folder+folder+"/"+text_file) as f:
+            with open(data_folder + folder + "/" + text_file) as f:
 
                 beatle_folder = "_".join(f.readline().split(":")).replace("\n", "")
                 lyrics = f.read()
@@ -83,31 +84,29 @@ def run_word_tokenize():
                     lemmatised_words.append(lemmatised_word)
 
                 # Saves into general folders and beatle-specific folders
-                if not os.path.exists(output_folder+"words/all/"+folder):
-                    os.makedirs(output_folder+"words/all/"+folder)
+                if not os.path.exists(output_folder + "words/all/" + folder):
+                    os.makedirs(output_folder + "words/all/" + folder)
 
-                if not os.path.exists(output_folder+"sentences/all/"+folder):
-                    os.makedirs(output_folder+"sentences/all/"+folder)
+                if not os.path.exists(output_folder + "sentences/all/" + folder):
+                    os.makedirs(output_folder + "sentences/all/" + folder)
 
-                if not os.path.exists(output_folder+f"words/{beatle_folder}/{folder}"):
-                    os.makedirs(output_folder+f"words/{beatle_folder}/{folder}")
+                if not os.path.exists(output_folder + f"words/{beatle_folder}/{folder}"):
+                    os.makedirs(output_folder + f"words/{beatle_folder}/{folder}")
 
-                if not os.path.exists(output_folder+f"sentences/{beatle_folder}/{folder}"):
-                    os.makedirs(output_folder+f"sentences/{beatle_folder}/{folder}")
+                if not os.path.exists(output_folder + f"sentences/{beatle_folder}/{folder}"):
+                    os.makedirs(output_folder + f"sentences/{beatle_folder}/{folder}")
 
-                with open(output_folder+"sentences/all/"+folder+"/"+text_file, "w") as output_file:
+                with open(output_folder + "sentences/all/" + folder + "/" + text_file, "w") as output_file:
 
                     for sentence in sentences:
-
                         output_file.write(f"{sentence}\n")
 
-                shutil.copyfile(output_folder+"sentences/all/"+folder+"/"+text_file,
-                                output_folder+f"sentences/{beatle_folder}/{folder}/{text_file}")
+                shutil.copyfile(output_folder + "sentences/all/" + folder + "/" + text_file,
+                                output_folder + f"sentences/{beatle_folder}/{folder}/{text_file}")
 
-                with open(output_folder+"words/all/"+folder+"/"+text_file, "w") as output_file:
+                with open(output_folder + "words/all/" + folder + "/" + text_file, "w") as output_file:
 
                     for word, lword in zip(words, lemmatised_words):
-
                         output_file.write(f"{word[0]}:{lword}\n")
 
                 shutil.copyfile(output_folder + "words/all/" + folder + "/" + text_file,
@@ -115,25 +114,23 @@ def run_word_tokenize():
 
 
 def dict_creation():
-    path = "data/pre_processed_data/sentences/all"
+    path = "data/labelled_data/train/"
     song_dict = {}
     labels_dict = {}
     sentences = []
     labels = []
-    for folder in os.listdir(path):
-        for file in os.listdir(path + "/" + folder):
-            if file == "Anna_(Go_To_Him).txt":
-                with open(path + "/" + folder + "/" + file) as f:
-                    lyrics = f.readlines()
-                    lyrics = [lyric.replace("\n", "") for lyric in lyrics]
-                    sentences = []
-                    labels = []
-                    for line in lyrics:
-                        sentence = line.split("%")[0]
-                        label = line.split("%")[1]
-                        sentences.append(sentence)
-                        labels.append(label)
-                    song_dict[file.replace(".txt", "")] = sentences
-                    labels_dict[file.replace(".txt", "")] = labels
-
+    for file in os.listdir(path):
+        if file == "Anna_(Go_To_Him).txt":
+            with open(path + "/" + file) as f:
+                lyrics = f.readlines()[1:]
+                lyrics = [lyric.replace("\n", "") for lyric in lyrics]
+                sentences = []
+                labels = []
+                for line in lyrics:
+                    sentence = line.split("%")[0]
+                    label = line.split("%")[1]
+                    sentences.append(sentence)
+                    labels.append(label)
+                song_dict[file.replace(".txt", "")] = sentences
+                labels_dict[file.replace(".txt", "")] = labels
     return song_dict, labels_dict

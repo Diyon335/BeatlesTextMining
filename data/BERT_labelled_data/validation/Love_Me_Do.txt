@@ -1,0 +1,22 @@
+John:Paul
+Love, love me do.%joy
+You know I love you.%joy
+I'll always be true, so please, love me do.%joy
+Whoa, love me do.%joy
+Love, love me do.%joy
+You know I love you.%joy
+I'll always be true, so please, love me do.%fear
+Whoa, love me do.%joy
+Someone to love, somebody new.%neutral
+Someone to love, someone like you.%joy
+Love, love me do.%joy
+You know I love you.%joy
+I'll always be true, so please, love me do.%fear
+Whoa, love me do.%joy
+Love, love me do.%joy
+You know I love you.%joy
+I'll always be true, so please, love me do.%joy
+Whoa, love me do.%joy
+Yeah, love me do.%joy
+Whoa, love me do.%joy
+Yeah, love me do.%joy

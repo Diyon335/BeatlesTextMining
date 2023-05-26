@@ -14,7 +14,7 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-t5 = False
+t5 = True
 bert = False
 run_coref = False
 run_electra = False
