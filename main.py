@@ -14,11 +14,11 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-t5 = True
+t5 = False
 bert = False
 run_coref = False
-run_electra = False
-run_ee = True
+run_electra = True
+run_ee = False
 
 
 def main():
@@ -60,8 +60,9 @@ def main():
         coref.run_coref()
 
     if run_electra:
-        #electra.run_classifier()
+        # electra.run_classifier()
         electra.fine_tune()
+        # electra.test_fine_tuned()
 
     if run_ee:
         knowledge_graph.run_relation_extraction()

@@ -4,7 +4,7 @@ from datasets import Dataset
 from nltk.tokenize import sent_tokenize
 import matplotlib.pyplot as plt
 import networkx as nx
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, ElectraForSequenceClassification, ElectraTokenizer
 import random
 import numpy as np
 import evaluate
@@ -144,6 +144,48 @@ def fine_tune():
     )
 
     trainer.train()
+
+    # Save the model and tokenizer
+    output_dir = "data/electra_fine_tuned/"
+    model.save_pretrained(output_dir)
+    tokenizer.save_pretrained(output_dir)
+
+
+def test_fine_tuned():
+
+    classifier = pipeline("text-classification", model='data/electra_fine_tuned/', return_all_scores=True)
+
+    test_data_directory = "data/labelled_data/test/"
+
+    total = 0
+    correct = 0
+
+    for song in os.listdir(test_data_directory):
+
+        with open(test_data_directory + song) as f:
+
+            lines = f.readlines()[1:]
+
+            for line in lines:
+
+                split_line = line.split("%")
+                text = split_line[0].replace("\n", "")
+                label = split_line[1].replace("\n", "")
+
+                prediction = classifier(text)
+
+                sentiments = prediction[0]
+
+                # Get the highest scoring sentiment for the sentence
+                max_score_sentiment = max(sentiments, key=lambda x: x['score'])
+                max_label = max_score_sentiment['label']
+
+                total += 1
+
+                if label == max_label:
+                    correct += 1
+
+    print(f"Accuracy after fine-tuning: {correct/total}")
 
 
 def compute_metrics(eval_pred):
