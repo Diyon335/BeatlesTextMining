@@ -1,9 +1,14 @@
-from transformers import BertTokenizer, BertModel,AutoTokenizer, AutoModelForTokenClassification, TokenClassificationPipeline, pipeline
+from transformers import BertTokenizer, BertModel, AutoTokenizer, AutoModelForTokenClassification, \
+    TokenClassificationPipeline,pipeline, RobertaTokenizerFast, TrainingArguments,\
+    DataCollatorWithPadding, Trainer, AutoModelForSequenceClassification
 import random
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from datasets import Dataset
+import wandb
+
 SEED = 1234
 random.seed(SEED)
 np.random.seed(SEED)
@@ -12,20 +17,24 @@ torch.backends.cudnn.deterministic = True
 
 classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
 
+data_folder = "data/pre_processed_data/sentences/all/"
+labelled_data = "data/BERT_labelled_data/"
+model_emotions = ['joy', 'love', 'anger', 'fear', 'surprise', 'sadness']
+output_folder = "data/sentiment_cluster_diagrams/"
+
 def emotion_classification(dict):
     for key in dict:
-        if key == "Anna_(Go_To_Him)" or key == "Let_It_Be":
-            sentence_labels = []
-            for item in dict[key]:
-                prediction = classifier(item, )
-                max = 0
-                for element in prediction:
-                    for em in element:
-                        if (em['score'] > max):
-                            max = em['score']
-                            emotion = em['label']
-                sentence_labels.append(emotion)
-                dict[key] = sentence_labels
+        sentence_labels = []
+        for item in dict[key]:
+            prediction = classifier(item, )
+            max = 0
+            for element in prediction:
+                for em in element:
+                    if (em['score'] > max):
+                        max = em['score']
+                        emotion = em['label']
+            sentence_labels.append(emotion)
+            dict[key] = sentence_labels
 
     for song in dict:
         sentiment_dict = {}
@@ -54,6 +63,7 @@ def embeddings(dict):
     print(token_ids)
     print(attention_mask)
 
+
 def pos_tagging(dict):
     temp = []
     final_list = []
@@ -63,14 +73,13 @@ def pos_tagging(dict):
 
     pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
     for key in dict:
-        if key == "Anna_(Go_To_Him)" or key == "Let_It_Be":
-            for item in dict[key]:
-                outputs = pipeline(item)
-                for element in outputs:
-                    temp.append(element["entity"])
-                    temp.append(element["word"])
+        for item in dict[key]:
+            outputs = pipeline(item)
+            for element in outputs:
+                temp.append(element["entity"])
+                temp.append(element["word"])
     final_list = [temp[n:n + 2] for n in range(0, len(temp), 2)]
-    return(final_list)
+    return (final_list)
 
 
 def extract_most_common_names(entities_list):
@@ -86,11 +95,89 @@ def extract_most_common_names(entities_list):
             final_dict[element[1]] += 1
     return final_dict
 
-def fine_tune(sentence_dict, label_dict):
-    dataset = {}
-    print(sentence_dict)
-    print(label_dict)
+def compute_metrics(eval_pred):
 
-    dataset = Dataset.from_dict(sentence_dict)
-    print(dataset)
-    #tokenized_datasets = sentence_dict.map(tokenize_function, batched=True)
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+
+    return metric.compute(predictions=predictions, references=labels)
+
+def fine_tune(sentence_dict, label_dict):
+    dataset = {"train": [], "test": [], "validation": []}
+
+    for data_type in os.listdir(labelled_data):
+
+        for song in os.listdir(labelled_data + data_type):
+
+            with open(labelled_data + data_type + "/" + song) as f:
+
+                sentences = f.readlines()[1:]
+
+                for sentence in sentences:
+                    label_dict = {}
+
+                    split_sentence = sentence.split("%")
+
+                    text = split_sentence[0].replace("\n", "")
+                    label = split_sentence[1].replace("\n", "")
+
+                    label_dict["label"] = label
+                    label_dict["text"] = text
+
+                    dataset[data_type].append(label_dict)
+
+    tokenizer = RobertaTokenizerFast.from_pretrained("tae898/emoberta-large")
+
+    tokenized_datasets = {"train": [], "test": [], "validation": []}
+
+    label_map = {
+        "neutral": 0,
+        "joy": 1,
+        "surprise": 2,
+        "anger": 3,
+        "sadness": 4,
+        "dissgust": 5,
+        "fear": 6
+    }
+
+    for data_type in dataset:
+
+        for example in dataset[data_type]:
+            tokenized_example = tokenizer(example["text"], padding="max_length", truncation=True)
+            tokenized_example["label"] = label_map[example["label"]]
+            tokenized_datasets[data_type].append(tokenized_example)
+
+    random.shuffle(tokenized_datasets["train"])
+    random.shuffle(tokenized_datasets["test"])
+    random.shuffle(tokenized_datasets["validation"])
+
+    model = AutoModelForSequenceClassification.from_pretrained('tae898/emoberta-large')
+
+    training_args = TrainingArguments(
+        output_dir="data/BERT_fine_tuned/",
+        evaluation_strategy="epoch",
+        per_device_train_batch_size=8,
+        per_device_eval_batch_size=8,
+        num_train_epochs=8,
+        learning_rate=2e-5,
+        weight_decay=0.01,
+        load_best_model_at_end=True,
+        metric_for_best_model="accuracy",
+        logging_steps=500,
+        save_strategy="epoch"
+    )
+
+    wandb.login(key="f98f0b7ea0fe9cdabbe5e59c532b2260512d004b")
+
+    data_collator = DataCollatorWithPadding(tokenizer)
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets["validation"],
+        data_collator=data_collator,
+        compute_metrics=compute_metrics,
+    )
+
+    trainer.train()

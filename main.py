@@ -6,7 +6,7 @@ import nltk
 import plot_freq_dist
 import pre_process
 import coref
-import electra
+#import electra
 import entity_extraction
 
 """
@@ -14,10 +14,10 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-t5 = False
+t5 = True
 bert = False
 run_coref = False
-run_electra = True
+run_electra = False
 run_ee = False
 
 
