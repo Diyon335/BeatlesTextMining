@@ -7,7 +7,7 @@ import plot_freq_dist
 import pre_process
 import coref
 import electra
-import entity_extraction
+import knowledge_graph
 
 """
 You can change what you want to run over here
@@ -17,8 +17,8 @@ freq_dist = False
 t5 = False
 bert = False
 run_coref = False
-run_electra = True
-run_ee = False
+run_electra = False
+run_ee = True
 
 
 def main():
@@ -64,7 +64,7 @@ def main():
         electra.fine_tune()
 
     if run_ee:
-        entity_extraction.run_entity_extraction()
+        knowledge_graph.run_relation_extraction()
 
 
 if __name__ == '__main__':
