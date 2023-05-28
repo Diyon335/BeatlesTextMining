@@ -74,7 +74,7 @@ def fine_tune():
 
             with open(labelled_data + data_type + "/" + song) as f:
 
-                sentences = f.readlines()[1:]
+                sentences = f.readlines()
 
                 for sentence in sentences:
                     label_dict = {}
@@ -88,6 +88,10 @@ def fine_tune():
                     label_dict["text"] = text
 
                     dataset[data_type].append(label_dict)
+
+    print("Total data used: ", (len(dataset["train"]) + len(dataset["validation"])))
+    print("Number of train data: ", len(dataset["train"]))
+    print("Number of train data: ", len(dataset["validation"]))
 
     tokenizer = AutoTokenizer.from_pretrained('bhadresh-savani/electra-base-emotion')
 
@@ -122,7 +126,7 @@ def fine_tune():
         per_device_train_batch_size=8,
         per_device_eval_batch_size=8,
         num_train_epochs=8,
-        learning_rate=2e-5,
+        learning_rate=0.001,
         weight_decay=0.01,
         load_best_model_at_end=True,
         metric_for_best_model="accuracy",
@@ -151,9 +155,12 @@ def fine_tune():
     tokenizer.save_pretrained(output_dir)
 
 
-def test_fine_tuned():
+def test_fine_tuned(after_fine_tune=True):
 
-    classifier = pipeline("text-classification", model='data/electra_fine_tuned/', return_all_scores=True)
+    if after_fine_tune:
+        classifier = pipeline("text-classification", model='data/electra_fine_tuned/', return_all_scores=True)
+    else:
+        classifier = pipeline("text-classification", model='bhadresh-savani/electra-base-emotion', return_all_scores=True)
 
     test_data_directory = "data/labelled_data/test/"
 
