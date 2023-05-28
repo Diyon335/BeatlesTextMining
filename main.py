@@ -1,7 +1,4 @@
-import t5_model
-import knowledge_graph
 import BERT
-import voting_scheme
 import nltk
 import plot_freq_dist
 import pre_process
@@ -18,7 +15,7 @@ t5 = True
 bert = False
 run_coref = False
 run_electra = False
-run_ee = True
+run_ee = False
 
 
 def main():
@@ -60,8 +57,14 @@ def main():
         coref.run_coref()
 
     if run_electra:
-        #electra.run_classifier()
+        # electra.run_classifier()
+        print("Electra before fine tuning")
+        electra.test_fine_tuned(False)
+
         electra.fine_tune()
+
+        print("Electra after fine tuning")
+        electra.test_fine_tuned()
 
     if run_ee:
         knowledge_graph.run_relation_extraction()
