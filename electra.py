@@ -77,6 +77,7 @@ def fine_tune():
                 sentences = f.readlines()
 
                 for sentence in sentences:
+
                     label_dict = {}
 
                     split_sentence = sentence.split("%")
@@ -125,7 +126,7 @@ def fine_tune():
         evaluation_strategy="epoch",
         per_device_train_batch_size=8,
         per_device_eval_batch_size=8,
-        num_train_epochs=8,
+        num_train_epochs=10,
         learning_rate=0.001,
         weight_decay=0.01,
         load_best_model_at_end=True,
@@ -171,7 +172,7 @@ def test_fine_tuned(after_fine_tune=True):
 
         with open(test_data_directory + song) as f:
 
-            lines = f.readlines()[1:]
+            lines = f.readlines()
 
             for line in lines:
 
@@ -192,7 +193,7 @@ def test_fine_tuned(after_fine_tune=True):
                 if label == max_label:
                     correct += 1
 
-    print(f"Accuracy after fine-tuning: {correct/total}")
+    print(f"Accuracy: {correct/total}")
 
 
 def compute_metrics(eval_pred):

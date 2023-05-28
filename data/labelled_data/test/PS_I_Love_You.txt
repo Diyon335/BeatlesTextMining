@@ -1,18 +1,18 @@
-As I write this letter, send my love to you.
-Remember that I'll always be in love with you.
-Treasure these few words 'til we're together.
-Keep all my love forever.
-P.S. I love you, you, you.
-I'll be coming home again to you, love, and 'til the day I do, love.
-P.S. I love you, you, you.
-As I write this letter, send my love to you.
-Remember that I'll always be in love with you.
-Treasure these few words 'til we're together.
-Keep all my love forever.
-P.S. I love you, you, you.
-As I write this letter, send my love to you (you know I want you to).
-Remember that I'll always be in love with you.
-I'll be coming home again to you, love, and 'til the day I do, love.
-P.S. I love you, you, you.
-You, you, you.
-I love you.
+As I write this letter, send my love to you.%love
+Remember that I'll always be in love with you.%love
+Treasure these few words 'til we're together.%love
+Keep all my love forever.%love
+P.S. I love you, you, you.%love
+I'll be coming home again to you, love, and 'til the day I do, love.%love
+P.S. I love you, you, you.%love
+As I write this letter, send my love to you.%love
+Remember that I'll always be in love with you.%love
+Treasure these few words 'til we're together.%love
+Keep all my love forever.%love
+P.S. I love you, you, you.%love
+As I write this letter, send my love to you (you know I want you to).%love
+Remember that I'll always be in love with you.%love
+I'll be coming home again to you, love, and 'til the day I do, love.%love
+P.S. I love you, you, you.%love
+You, you, you.%joy
+I love you.%love
