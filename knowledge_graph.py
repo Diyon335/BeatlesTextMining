@@ -14,32 +14,12 @@ from nltk.corpus import wordnet
 
 data_folder = "data/resolved_corefs/Get_Back.txt"
 
-
-def run_relation_extraction():
-    with open(data_folder) as f:
-
-        sentences = nltk.sent_tokenize(f.read())
-
-        tagged_sentences = [nltk.pos_tag(nltk.word_tokenize(sentence)) for sentence in sentences]
-
-        pattern = r'(<PERSON>)+ was (<PERSON>)+'
-
-        reldict = relextract.extract_rels(tagged_sentences)
-
-        reldicts = []
-        for sent in tagged_sentences:
-            reldicts += relextract.extract_rels('PER', 'ORG', sent, pattern=pattern)
-
-        for reldict in reldicts:
-            print(reldict['subjtext'], reldict['filler'], reldict['objtext'])
-
 def prova1():
     stanza.download('en')
     nlp = stanza.Pipeline('en')
 
     # Input sentence
-    sentence = "Luca eats fruit, Diyon eats meal, Francesca eats chocolate, Luca kills cats."
-
+    sentence = "He's a real nowhere man sitting in his nowhere land making all his nowhere plans for nobody."
     # Parse the sentence
     doc = nlp(sentence)
 
@@ -48,6 +28,7 @@ def prova1():
 
     # Iterate through the words in the sentence
     for word in doc.sentences[0].words:
+        print(word)
         # Check if the word is a verb
         if word.upos == "VERB":
             verb = word.lemma
@@ -75,6 +56,49 @@ def prova1():
     # Draw the graph
     pos = nx.spring_layout(graph)
     nx.draw_networkx(graph, pos, with_labels=True, node_color='lightblue', node_size=500, font_size=12,
+                     font_weight='bold', edge_color='gray', arrows=True)
+
+    # Add labels to the edges
+    edge_labels = nx.get_edge_attributes(graph, 'label')
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+
+    plt.show()
+
+def prova(dictionary):
+    stanza.download('en')
+    nlp = stanza.Pipeline('en')
+
+    graph = nx.DiGraph()
+
+    for key in dictionary:
+        for sentence in dictionary[key]:
+            doc = nlp(sentence)
+            for word in doc.sentences[0].words:
+                if word.upos == "VERB":
+                    verb = word.lemma
+                    subjects = []
+                    objects = []
+                    for dep_word in doc.sentences[0].words:
+                        if dep_word.head == word.id:
+                            if dep_word.deprel == "nsubj":
+                                subjects.append(dep_word.text)
+                            elif dep_word.deprel == "obj":
+                                objects.append(dep_word.text)
+                    for subj in subjects:
+                        graph.add_node(subj)
+                    for obj in objects:
+                        graph.add_node(obj)
+                    for element1, element2 in zip(subjects, objects):
+                        graph.add_node(element1)
+                        graph.add_node(element2)
+                        graph.add_edge(element1, element2, label=verb)
+
+                    for obj in objects:
+                        graph.add_node(obj)
+
+    # Draw the graph
+    pos = nx.spring_layout(graph)
+    nx.draw_networkx(graph, pos, with_labels=True, node_color='lightblue', node_size=100, font_size=6,
                      font_weight='bold', edge_color='gray', arrows=True)
 
     # Add labels to the edges

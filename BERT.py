@@ -8,6 +8,18 @@ import matplotlib.pyplot as plt
 import torch
 from datasets import Dataset
 import wandb
+from transformers import pipeline, DataCollatorWithPadding
+import os
+from datasets import Dataset
+from nltk.tokenize import sent_tokenize
+import matplotlib.pyplot as plt
+import networkx as nx
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, ElectraForSequenceClassification, ElectraTokenizer
+import random
+import numpy as np
+import evaluate
+import wandb
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 SEED = 1234
 random.seed(SEED)
@@ -19,68 +31,50 @@ classifier = pipeline("text-classification", model='tae898/emoberta-large', retu
 
 data_folder = "data/pre_processed_data/sentences/all/"
 labelled_data = "data/BERT_labelled_data/"
-model_emotions = ['joy', 'love', 'anger', 'fear', 'surprise', 'sadness']
-output_folder = "data/sentiment_cluster_diagrams/"
+model_emotions = ['joy', 'neutral', 'anger', 'fear', 'surprise', 'sadness', "disgust"]
+output_folder = "data/BERT_sentiment_cluster_diagrams/"
 
-def emotion_classification(dict):
-    for key in dict:
-        sentence_labels = []
-        for item in dict[key]:
-            prediction = classifier(item, )
-            max = 0
-            for element in prediction:
-                for em in element:
-                    if (em['score'] > max):
-                        max = em['score']
-                        emotion = em['label']
-            sentence_labels.append(emotion)
-            dict[key] = sentence_labels
+def run_classifier():
 
-    for song in dict:
-        sentiment_dict = {}
-        sent_list = dict[song]
+    classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
 
-        for sent in sent_list:
+    total_dict = {}
 
-            if sent not in sentiment_dict:
-                sentiment_dict[sent] = 0
+    for album in os.listdir(data_folder):
 
-            sentiment_dict[sent] += 1
+        album_dict = {}
 
-        dict[song] = sentiment_dict
-    return dict
+        for song in os.listdir(data_folder + album):
 
+            # Highest scoring sentiments for all sentences in the song
+            song_sentiments = {}
 
-def embeddings(dict):
-    tokens = tokenizer.tokenize(dict["Anna_(Go_To_Him)"][0])
-    tokens = ['[CLS]'] + tokens + ['[SEP]']
-    attention_mask = [1 if i != '[PAD]' else 0 for i in tokens]
-    token_ids = tokenizer.convert_tokens_to_ids(tokens)
-    token_ids = torch.tensor(token_ids).unsqueeze(0)
-    attention_mask = torch.tensor(attention_mask).unsqueeze(0)
-    last_hidden_state, pooler_output = model(token_ids, attention_mask=attention_mask).to_tuple()
-    print(last_hidden_state)
-    print(token_ids)
-    print(attention_mask)
+            with open(data_folder + album + f"/{song}", "r") as f:
 
+                sentence_tokens = sent_tokenize(f.read())
 
-def pos_tagging(dict):
-    temp = []
-    final_list = []
-    model_name = "QCRI/bert-base-multilingual-cased-pos-english"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForTokenClassification.from_pretrained(model_name)
+                for sentence in sentence_tokens:
 
-    pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
-    for key in dict:
-        for item in dict[key]:
-            outputs = pipeline(item)
-            for element in outputs:
-                temp.append(element["entity"])
-                temp.append(element["word"])
-    final_list = [temp[n:n + 2] for n in range(0, len(temp), 2)]
-    return (final_list)
+                    prediction = classifier(sentence)
 
+                    sentiments = prediction[0]
+
+                    # Get the highest scoring sentiment for the sentence
+                    max_score_sentiment = max(sentiments, key=lambda x: x['score'])
+                    max_label = max_score_sentiment['label']
+                    # max_score = max_score_sentiment['score']
+
+                    if max_label not in song_sentiments:
+                        song_sentiments[max_label] = 0
+
+                    song_sentiments[max_label] += 1
+
+            album_dict[song] = song_sentiments
+            total_dict[song] = song_sentiments
+
+        plot_custer_diagram(album, album_dict, output_folder + album + ".png")
+
+    plot_custer_diagram("All songs", total_dict, output_folder + "all.png")
 
 def extract_most_common_names(entities_list):
     final_list = []
@@ -97,12 +91,22 @@ def extract_most_common_names(entities_list):
 
 def compute_metrics(eval_pred):
 
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
+    logits, labels = eval_pred.predictions, eval_pred.label_ids
+    predictions = np.argmax(logits, axis=1)
 
-    return metric.compute(predictions=predictions, references=labels)
+    accuracy = accuracy_score(labels, predictions)
+    precision = precision_score(labels, predictions, average='weighted')
+    recall = recall_score(labels, predictions, average='weighted')
+    f1 = f1_score(labels, predictions, average='weighted')
 
-def fine_tune(sentence_dict, label_dict):
+    return {
+        'accuracy': accuracy,
+        'precision': precision,
+        'recall': recall,
+        'f1': f1
+    }
+
+def fine_tune():
     dataset = {"train": [], "test": [], "validation": []}
 
     for data_type in os.listdir(labelled_data):
@@ -136,7 +140,7 @@ def fine_tune(sentence_dict, label_dict):
         "surprise": 2,
         "anger": 3,
         "sadness": 4,
-        "dissgust": 5,
+        "disgust": 5,
         "fear": 6
     }
 
@@ -181,3 +185,103 @@ def fine_tune(sentence_dict, label_dict):
     )
 
     trainer.train()
+
+    output_dir = "data/BERT_fine_tuned/"
+    model.save_pretrained(output_dir)
+    tokenizer.save_pretrained(output_dir)
+
+def test_fine_tuned(after_fine_tune=True):
+
+    if after_fine_tune:
+        classifier = pipeline("text-classification", model='data/BERT_fine_tuned/', return_all_scores=True)
+    else:
+        classifier = pipeline("text-classification", model='tae898/emoberta-large', return_all_scores=True)
+
+    test_data_directory = "data/BERT_labelled_data/test/"
+
+    total = 0
+    correct = 0
+
+    for song in os.listdir(test_data_directory):
+
+        with open(test_data_directory + song) as f:
+
+            lines = f.readlines()
+
+            for line in lines:
+
+                split_line = line.split("%")
+                text = split_line[0].replace("\n", "")
+                label = split_line[1].replace("\n", "")
+
+                prediction = classifier(text)
+
+                sentiments = prediction[0]
+
+                # Get the highest scoring sentiment for the sentence
+                max_score_sentiment = max(sentiments, key=lambda x: x['score'])
+                max_label = max_score_sentiment['label']
+
+                total += 1
+
+                if label == max_label:
+                    correct += 1
+
+    print(f"Accuracy: {correct/total}")
+
+def plot_custer_diagram(title, song_dict, output_path):
+
+    # Create an empty graph
+    G = nx.Graph()
+
+    final_emotions = []
+    # Add nodes for each emotion
+    for emotion in model_emotions:
+
+        for song in song_dict.keys():
+
+            found_emotion = False
+
+            for emos in song_dict[song].keys():
+
+                if emotion in emos:
+                    final_emotions.append(emotion)
+                    G.add_node(emotion)
+                    break
+
+            if found_emotion:
+                break
+
+    # Iterate over songs and emotions
+    for song, emotions in song_dict.items():
+        # Calculate the total count of emotions in the song
+        total_emotions = sum(emotions.values())
+
+        # Add edges from emotions to songs
+        for emotion, count in emotions.items():
+            # Calculate the normalized weight as the fraction of the emotion count in the song
+            weight = count / total_emotions
+
+            # Add edge with the normalized weight
+            G.add_edge(emotion, song, weight=weight)
+
+            # Set the 'title' attribute for song nodes
+            G.nodes[song]['title'] = song.replace(".txt", "").replace("_", " ")
+
+    # Set positions for the nodes in the clu-ster diagram
+    pos = nx.spring_layout(G)
+
+    # Draw nodes
+    nx.draw_networkx_nodes(G, pos, nodelist=final_emotions, node_color='lightgray', node_size=2000)
+    nx.draw_networkx_nodes(G, pos, nodelist=song_dict.keys(), node_color='skyblue', node_size=800)
+
+    # Set node labels
+    labels = {node: node if node in final_emotions else song for node, song in G.nodes(data='title')}
+    nx.draw_networkx_labels(G, pos, labels, font_size=8)
+
+    # Remove edges
+    plt.axis('off')
+    plt.title(title)
+    # Display the plot
+    plt.savefig(output_path)
+    plt.clf()

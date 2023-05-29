@@ -114,23 +114,23 @@ def run_word_tokenize():
 
 
 def dict_creation():
-    path = "data/labelled_data/train/"
+    path = "data/resolved_corefs/"
     song_dict = {}
     labels_dict = {}
     sentences = []
     labels = []
     for file in os.listdir(path):
-        if file == "A_Taste_Of_Honey.txt":
+        if file == "Sexy_Sadie.txt":
             with open(path + "/" + file) as f:
-                lyrics = f.readlines()[1:]
+                lyrics = f.readlines()
                 lyrics = [lyric.replace("\n", "") for lyric in lyrics]
                 sentences = []
-                labels = []
+                #labels = []
                 for line in lyrics:
-                    sentence = line.split("%")[0]
-                    label = line.split("%")[1]
-                    sentences.append(sentence)
-                    labels.append(label)
+                    #sentence = line.split("%")[0]
+                    #label = line.split("%")[1]
+                    sentences.append(line)
+                    #labels.append(label)
                 song_dict[file.replace(".txt", "")] = sentences
-                labels_dict[file.replace(".txt", "")] = labels
-    return song_dict, labels_dict
+                #labels_dict[file.replace(".txt", "")] = labels
+    return song_dict#, labels_dict
