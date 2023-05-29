@@ -1,0 +1,23 @@
+I don't want to spoil the party, so I'll go.%sadness
+I would hate my disappointment to show.%anger
+There's nothing for me here, so I will disappear.%sadness
+If she turns up while I'm gone, please let me know.%sadness
+I've had a drink or two and I don't care.%anger
+There's no fun in what I do if she's not there.%sadness
+I wonder what went wrong.%surprise
+I've waited far too long.%anger
+I think I'll take a walk and look for her.%sadness
+Though tonight she's made me sad, I still love her.%sadness
+If I find her, I'll be glad.%joy
+I still love her.%love
+I don't want to spoil the party, so I'll go.%sadness
+I would hate my disappointment to show.%anger
+There's nothing for me here, so I will disappear.%sadness
+If she turns up while I'm gone, please let me know.%sadness
+Though tonight she's made me sad, I still love her.%sadness
+If I find her, I'll be glad.%joy
+I still love her.%love
+Though I've had a drink or two and I don't care, there's no fun in what I do if she's not there.%sadness
+I wonder what went wrong.%fear
+I've waited far too long.%anger
+If I think I'll take a walk and look for her.%sadness
