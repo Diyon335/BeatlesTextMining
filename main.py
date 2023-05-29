@@ -18,7 +18,7 @@ t5 = True
 bert = False
 run_coref = False
 run_electra = False
-run_ee = True
+run_ee = False
 
 
 def main():
@@ -42,9 +42,12 @@ def main():
         plot_freq_dist.plot()
 
     if t5:
-        sentences_dict, labels_dict = pre_process.dict_creation()
+        #sentences_dict, labels_dict = pre_process.dict_creation()
+        #print(sentences_dict)
+        #knowledge_graph.prova()
+        knowledge_graph.prova1()
         #sentences_dict = coref.coreference(sentences_dict)
-        BERT.fine_tune(sentences_dict, labels_dict)
+        #BERT.fine_tune(sentences_dict, labels_dict)
         #dict = BERT.emotion_classification(sentences_dict)
         #print(dict)
         #entities_list = BERT.pos_tagging(sentences_dict)
