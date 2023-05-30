@@ -120,7 +120,7 @@ def dict_creation():
     sentences = []
     labels = []
     for file in os.listdir(path):
-        if file == "Sexy_Sadie.txt":
+        if file == "Maxwells_Silver_Hammer.txt":
             with open(path + "/" + file) as f:
                 lyrics = f.readlines()
                 lyrics = [lyric.replace("\n", "") for lyric in lyrics]

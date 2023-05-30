@@ -14,7 +14,7 @@ from nltk.corpus import wordnet
 
 data_folder = "data/resolved_corefs/Get_Back.txt"
 
-def prova1():
+def produce_knowledge_graph():
     stanza.download('en')
     nlp = stanza.Pipeline('en')
 
@@ -64,7 +64,7 @@ def prova1():
 
     plt.show()
 
-def prova(dictionary):
+def produce_knowledge_graph1(dictionary):
     stanza.download('en')
     nlp = stanza.Pipeline('en')
 
@@ -88,21 +88,25 @@ def prova(dictionary):
                         graph.add_node(subj)
                     for obj in objects:
                         graph.add_node(obj)
-                    for element1, element2 in zip(subjects, objects):
-                        graph.add_node(element1)
-                        graph.add_node(element2)
-                        graph.add_edge(element1, element2, label=verb)
+                    if len(subjects) != 0 and len(objects) != 0:
+                        for element1, element2 in zip(subjects, objects):
+                            graph.add_node(element1)
+                            graph.add_node(element2)
+                            graph.add_edge(element1, element2, label=verb)
 
-                    for obj in objects:
-                        graph.add_node(obj)
+                        for obj in objects:
+                            graph.add_node(obj)
 
     # Draw the graph
-    pos = nx.spring_layout(graph)
-    nx.draw_networkx(graph, pos, with_labels=True, node_color='lightblue', node_size=100, font_size=6,
+    pos = nx.circular_layout(graph)
+    isolated_nodes = [node for node in graph.nodes if graph.degree[node] == 0]
+
+    graph.remove_nodes_from(isolated_nodes)
+    nx.draw_networkx(graph, pos, with_labels=True, node_color='lightblue', node_size=150, font_size=10,
                      font_weight='bold', edge_color='gray', arrows=True)
 
     # Add labels to the edges
     edge_labels = nx.get_edge_attributes(graph, 'label')
-    nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels, font_size = 6)
 
     plt.show()

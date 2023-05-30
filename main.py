@@ -11,10 +11,10 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-bert = True
+bert = False
 run_coref = False
 run_electra = False
-run_ee = False
+run_ee = True
 
 
 def main():
@@ -54,7 +54,8 @@ def main():
         electra.test_fine_tuned()
 
     if run_ee:
-        knowledge_graph.run_relation_extraction()
+        sentences = pre_process.dict_creation()
+        knowledge_graph.produce_knowledge_graph1(sentences)
 
 
 if __name__ == '__main__':
