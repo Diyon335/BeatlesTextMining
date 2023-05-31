@@ -135,7 +135,7 @@ def fine_tune():
         save_strategy="epoch"
     )
 
-    wandb.login(key="f98f0b7ea0fe9cdabbe5e59c532b2260512d004b")
+    wandb.login(key="***")
 
     data_collator = DataCollatorWithPadding(tokenizer)
 
