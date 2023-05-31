@@ -1,4 +1,3 @@
-John:Paul:George
 As I write this letter, send my love to you.%joy
 Remember that I'll always be in love with you.%joy
 Treasure these few words 'til we're together.%joy

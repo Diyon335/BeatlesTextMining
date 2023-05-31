@@ -18,7 +18,6 @@ ooooh:ooooh
 banks:bank
 lagoon:lagoon
 ooooh:ooooh
-ooh:ooh
 anybody:anybody
 tell:tell
 anybody:anybody
@@ -65,7 +64,6 @@ steal:steal
 could:could
 rob:rob
 ooooh:ooooh
-ooh:ooh
 anybody:anybody
 tell:tell
 anybody:anybody

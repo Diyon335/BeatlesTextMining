@@ -23,7 +23,6 @@ little:little
 thing:thing
 know:know
 things:thing
-ooh:ooh
 i'm:i'm
 i'm:i'm
 happy:happy
@@ -47,13 +46,11 @@ little:little
 thing:thing
 know:know
 things:thing
-ooh:ooh
 every:every
 little:little
 thing:thing
 know:know
 things:thing
-ooh:ooh
 every:every
 little:little
 thing:thing

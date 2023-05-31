@@ -47,9 +47,6 @@ good:good
 acts:act
 understood:understood
 cool:cool
-ooh:ooh
-ooh:ooh
-ooh:ooh
 girl:girl
 girl:girl
 girl:girl

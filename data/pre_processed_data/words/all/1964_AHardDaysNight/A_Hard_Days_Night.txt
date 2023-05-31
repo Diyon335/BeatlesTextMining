@@ -91,7 +91,6 @@ feeling:feeling
 holding:hold
 tight:tight
 tight:tight
-ooh:ooh
 hard:hard
 day's:day's
 night:night

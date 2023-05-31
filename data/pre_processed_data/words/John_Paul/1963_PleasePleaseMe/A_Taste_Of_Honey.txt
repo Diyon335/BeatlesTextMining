@@ -4,11 +4,7 @@ tasting:taste
 much:much
 sweeter:sweet
 wine:wine
-doo:doo
-doo:doo
 n'doo:n'doo
-doo:doo
-doo:doo
 n'doo:n'doo
 dream:dream
 first:first

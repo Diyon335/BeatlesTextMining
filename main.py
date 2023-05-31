@@ -11,10 +11,10 @@ You can change what you want to run over here
 """
 run_pre_processing = False
 freq_dist = False
-bert = False
+bert = True
 run_coref = False
 run_electra = False
-run_ee = True
+run_ee = False
 
 
 def main():
@@ -38,7 +38,12 @@ def main():
         plot_freq_dist.plot()
 
     if bert:
+        # BERT.run_classifier()
+        print("BERT before fine tuning")
+        BERT.test_fine_tuned(False)
         BERT.fine_tune()
+        print("BERT after fine tuning")
+        BERT.test_fine_tuned()
 
     if run_coref:
         coref.run_coref()

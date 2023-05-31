@@ -28,7 +28,6 @@ make:make
 dizzy:dizzy
 dizz:dizz
 lizzy:lizzy
-ooh:ooh
 girl:girl
 look:look
 fine:fine
@@ -44,7 +43,6 @@ miss:miss
 lizzy:lizzy
 call:call
 name:name
-ooh:ooh
 baby:baby
 say:say
 driving:drive
@@ -92,7 +90,6 @@ look:look
 fine:fine
 rockin:rockin
 rollin:rollin
-ooh:ooh
 said:say
 wish:wish
 mine:mine

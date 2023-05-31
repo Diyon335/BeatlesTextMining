@@ -105,8 +105,6 @@ yellow:yellow
 yellow:yellow
 submarine:submarine
 submarine:submarine
-ha:ha
-ha:ha
 live:live
 yellow:yellow
 submarine:submarine

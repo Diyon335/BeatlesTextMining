@@ -1,9 +1,10 @@
-from nltk import FreqDist
 import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import re
+from nltk.probability import FreqDist
+from wordcloud import WordCloud
 
 data_folder = "data/pre_processed_data/words/"
 output_directory = "data/freq_dist_graphs/"
@@ -39,8 +40,17 @@ def plot():
 
         album_freq_dist = FreqDist()
 
-        for token in all_tokens:
+        for token in album_tokens:
             album_freq_dist[token.lower()] += 1
+
+        album_wordcloud = WordCloud(width=800, height=400,
+                              background_color="white").generate_from_frequencies(dict(album_freq_dist))
+
+        # Display the word cloud using matplotlib
+        plt.figure(figsize=(10, 5))
+        plt.imshow(album_wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        plt.savefig(f"data/word_clouds/{album}.png")
 
         album_string = album.split("_")[1]
 
@@ -88,7 +98,16 @@ def plot():
             save_plot(f"Word Frequency Distribution of {beatle} in {album_string[1]}",
                       output_directory+beatle+f"/{album}.png",
                       freq_dist,
-                      20)
+                      num_words)
+
+            beatle_wordcloud = WordCloud(width=800, height=400,
+                                        background_color="white").generate_from_frequencies(dict(freq_dist))
+
+            # Display the word cloud using matplotlib
+            plt.figure(figsize=(10, 5))
+            plt.imshow(beatle_wordcloud, interpolation='bilinear')
+            plt.axis("off")
+            plt.savefig(f"data/word_clouds/{beatle}.png")
 
 
 def get_album_name(title):

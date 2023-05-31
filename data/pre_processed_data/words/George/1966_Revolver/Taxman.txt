@@ -63,14 +63,10 @@ i'm:i'm
 taxman:taxman
 ask:ask
 want:want
-ha:ha
-ha:ha
 mr:mr
 wilson:wilson
 want:want
 pay:pay
-ha:ha
-ha:ha
 mr:mr
 heath:heath
 cause:cause

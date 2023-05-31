@@ -30,8 +30,6 @@ whoo:whoo
 eggmen:eggmen
 whoo:whoo
 walrus:walrus
-goo:goo
-goo:goo
 g'joob:g'joob
 mister:mister
 city:city
@@ -78,8 +76,6 @@ knickers:knickers
 eggman:eggman
 eggmen:eggmen
 walrus:walrus
-goo:goo
-goo:goo
 g'joob:g'joob
 sitting:sit
 english:english
@@ -103,11 +99,7 @@ made:make
 tame:tame
 fortune's:fortune's
 walrus:walrus
-goo:goo
-goo:goo
 g'joob:g'joob
-goo:goo
-goo:goo
 g'joob:g'joob
 expert:expert
 texpert:texpert
@@ -122,9 +114,6 @@ ho:ho
 hee:hee
 hee:hee
 hee:hee
-ha:ha
-ha:ha
-ha:ha
 see:see
 smile:smile
 like:like
@@ -156,17 +145,9 @@ eggmen:eggmen
 whoo:whoo
 walrus:walrus
 whoo:whoo
-goo:goo
-goo:goo
 g'joob:g'joob
-goo:goo
-goo:goo
 g'joob:g'joob
-goo:goo
-goo:goo
 g'joob:g'joob
-goo:goo
-goo:goo
 g'joob:g'joob
 goob:goob
 jooba:jooba

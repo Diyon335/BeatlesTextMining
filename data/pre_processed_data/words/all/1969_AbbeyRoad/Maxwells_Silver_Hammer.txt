@@ -81,8 +81,6 @@ hammer:hammer
 came:come
 upon:upon
 head:head
-doo:doo
-doo:doo
 clang:clang
 clang:clang
 maxwell's:maxwell's
@@ -91,8 +89,6 @@ hammer:hammer
 made:make
 sure:sure
 dead:dead
-doo:doo
-doo:doo
 p:p
 c:c
 31:31
@@ -136,8 +132,6 @@ hammer:hammer
 came:come
 upon:upon
 head:head
-doo:doo
-doo:doo
 clang:clang
 clang:clang
 maxwell's:maxwell's
@@ -146,8 +140,6 @@ hammer:hammer
 made:make
 sure:sure
 dead:dead
-doo:doo
-doo:doo
 silver:silver
 hammer:hammer
 man:man

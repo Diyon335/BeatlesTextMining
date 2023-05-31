@@ -17,7 +17,6 @@ make:make
 alone:alone
 believe:believe
 beg:beg
-ooh:ooh
 ever:ever
 leave:leave
 alone:alone

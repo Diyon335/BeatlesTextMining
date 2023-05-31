@@ -7,9 +7,6 @@ looking:look
 looks:look
 like:like
 man:man
-aah:aah
-aah:aah
-aah:aah
 well:well
 see:see
 drag:drag
@@ -21,9 +18,6 @@ yes:yes
 see:see
 polythene:polythene
 pam:pam
-aah:aah
-aah:aah
-aah:aah
 hey:hey
 get:get
 dose:dose
@@ -33,9 +27,6 @@ killer:killer
 diller:diller
 dressed:dress
 hilt:hilt
-aah:aah
-aah:aah
-aah:aah
 kind:kind
 girl:girl
 aaah:aaah
@@ -47,9 +38,6 @@ could:could
 say:say
 attractively:attractively
 built:build
-aah:aah
-aah:aah
-aah:aah
 great:great
 two:two
 three:three

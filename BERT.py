@@ -209,7 +209,6 @@ def test_fine_tuned(after_fine_tune=True):
             lines = f.readlines()
 
             for line in lines:
-
                 split_line = line.split("%")
                 text = split_line[0].replace("\n", "")
                 label = split_line[1].replace("\n", "")

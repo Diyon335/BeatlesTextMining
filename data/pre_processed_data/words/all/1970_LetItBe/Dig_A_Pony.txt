@@ -1,7 +1,3 @@
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 dig:dig
 pony:pony
 well:well
@@ -12,10 +8,6 @@ yes:yes
 celebrate:celebrate
 anything:anything
 want:want
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 roadhog:roadhog
 well:well
 penetrate:penetrate
@@ -31,10 +23,6 @@ everything:everything
 got:get
 like:like
 want:want
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 pick:pick
 moondog:moondog
 well:well
@@ -43,10 +31,6 @@ everything:everything
 yes:yes
 radiate:radiate
 everything:everything
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 roll:roll
 stoney:stoney
 well:well
@@ -63,10 +47,6 @@ everything:everything
 got:get
 like:like
 want:want
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 feel:feel
 wind:wind
 blow:blow
@@ -78,10 +58,6 @@ yes:yes
 indicate:indicate
 anything:anything
 see:see
-hi:hi
-hi:hi
-hi:hi
-hi:hi
 rode:rode
 lorry:lorry
 well:well
@@ -97,4 +73,3 @@ everything:everything
 got:get
 like:like
 want:want
-ooh:ooh

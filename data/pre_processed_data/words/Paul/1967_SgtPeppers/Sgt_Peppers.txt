@@ -2,7 +2,6 @@ twenty:twenty
 years:year
 ago:ago
 today:today
-sgt:sgt
 pepper:pepper
 taught:taught
 band:band
@@ -19,14 +18,12 @@ introduce:introduce
 act:act
 known:know
 years:year
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
-hearts:hearts
+hearts:heart
 club:club
 band:band
 we're:we're
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
 hearts:hearts
@@ -35,7 +32,6 @@ band:band
 hope:hope
 enjoy:enjoy
 show:show
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
 hearts:hearts
@@ -46,13 +42,10 @@ back:back
 let:let
 evening:even
 go:go
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
 hearts:hearts
@@ -92,7 +85,6 @@ introduce:introduce
 one:one
 billy:billy
 shears:shear
-sgt:sgt
 pepper's:pepper's
 lonely:lonely
 hearts:hearts

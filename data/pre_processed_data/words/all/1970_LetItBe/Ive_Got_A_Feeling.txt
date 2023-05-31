@@ -15,7 +15,6 @@ hide:hide
 i've:i've
 got:get
 feeling:feeling
-ooh:ooh
 please:please
 believe:believe
 i'd:i'd

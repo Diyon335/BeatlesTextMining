@@ -70,8 +70,6 @@ woof:woof
 know:know
 awoo:awoo
 arf:arf
-ha:ha
-ha:ha
 got:get
 that's:that's
 got:get
@@ -86,13 +84,7 @@ ten:ten
 children:child
 hoo:hoo
 ho:ho
-ha:ha
-ha:ha
-ha:ha
 aarrh:aarrh
-ha:ha
-ha:ha
-ha:ha
 quiet:quiet
 boy:boy
 quiet:quiet

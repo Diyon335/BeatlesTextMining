@@ -70,7 +70,6 @@ come:come
 whoo:whoo
 hey:hey
 whoo:whoo
-ooh:ooh
 hey:hey
 i'm:i'm
 back:back

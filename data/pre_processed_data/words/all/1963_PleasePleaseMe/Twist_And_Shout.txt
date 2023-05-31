@@ -17,7 +17,6 @@ baby:baby
 come:come
 work:work
 work:work
-ooh:ooh
 well:well
 work:work
 honey:honey
@@ -38,7 +37,6 @@ would:would
 like:like
 knew:knew
 would:would
-ooh:ooh
 well:well
 shake:shake
 baby:baby
@@ -58,7 +56,6 @@ baby:baby
 come:come
 work:work
 work:work
-ooh:ooh
 know:know
 twist:twist
 little:little
@@ -84,7 +81,6 @@ mine:mine
 let:let
 know:know
 mine:mine
-ooh:ooh
 shake:shake
 baby:baby
 shake:shake
@@ -103,7 +99,6 @@ baby:baby
 come:come
 work:work
 work:work
-ooh:ooh
 know:know
 twist:twist
 little:little

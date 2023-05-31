@@ -45,10 +45,3 @@ things:thing
 endear:endear
 know:know
 mm:mm
-da:da
-da:da
-da:da
-da:da
-da:da
-da:da
-da:da

@@ -1,7 +1,7 @@
 import os
 import shutil
 from nltk.corpus import stopwords
-from nltk.tokenize import RegexpTokenizer, sent_tokenize
+from nltk.tokenize import RegexpTokenizer, sent_tokenize, word_tokenize
 from nltk import pos_tag
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
@@ -9,7 +9,18 @@ from nltk.stem import WordNetLemmatizer
 data_folder = "data/raw_data/"
 output_folder = "data/pre_processed_data/"
 
-extra_stop_words = ["oh", "ah", "yeah", "heh", "whoa"]
+extra_stop_words = ["oh", "ah", "yeah", "heh", "whoa", "la", "wop", "shoo", "bop", "ooh",
+                    "goo",
+                    "lo",
+                    "ove",
+                    "daa",
+                    "sgt",
+                    "doo",
+                    "da",
+                    "ha",
+                    "aah",
+                    "ba",
+                    "hi"]
 
 
 def get_wordnet_pos(treebank_tag):
@@ -125,12 +136,12 @@ def dict_creation():
                 lyrics = f.readlines()
                 lyrics = [lyric.replace("\n", "") for lyric in lyrics]
                 sentences = []
-                #labels = []
+                # labels = []
                 for line in lyrics:
-                    #sentence = line.split("%")[0]
-                    #label = line.split("%")[1]
+                    # sentence = line.split("%")[0]
+                    # label = line.split("%")[1]
                     sentences.append(line)
-                    #labels.append(label)
+                    # labels.append(label)
                 song_dict[file.replace(".txt", "")] = sentences
-                #labels_dict[file.replace(".txt", "")] = labels
-    return song_dict#, labels_dict
+                # labels_dict[file.replace(".txt", "")] = labels
+    return song_dict  # , labels_dict

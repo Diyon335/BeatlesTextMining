@@ -1,4 +1,3 @@
-John:Paul
 Love, love me do.%joy
 You know I love you.%joy
 I'll always be true, so please, love me do.%joy
